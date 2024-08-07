@@ -1,6 +1,7 @@
 ﻿Imports System.Collections.ObjectModel
 Imports System.Windows.Input
 Imports EntityFrameworkLib.Models
+Imports EntityFrameworkLib.Models.DTOs
 Imports VisualBasicLib.Abstracts
 Imports VisualBasicLib.Classes
 Imports VisualBasicLib.Interfaces
@@ -73,6 +74,16 @@ Namespace ViewModels
         OnPropertyChanged(NameOf(Enderecos))
       End Set
     End Property
+    Private Property _pessoas As ObservableCollection(Of PessoaDTO)
+    Public Property Pessoas As ObservableCollection(Of PessoaDTO)
+      Get
+        Return _pessoas
+      End Get
+      Set(value As ObservableCollection(Of PessoaDTO))
+        _pessoas = value
+        OnPropertyChanged(NameOf(Pessoas))
+      End Set
+    End Property
     Private Sub AddEndereco()
       _navigationManager.ShowPage("frmEndereco")
       Load()
@@ -80,6 +91,17 @@ Namespace ViewModels
     Private Sub Load()
       Try
         Enderecos = _enderecoRepository.GetAll
+        Pessoas = New ObservableCollection(Of PessoaDTO)((From p As Pessoa In _typeTRepository.GetAll()
+                                                          Join e As Endereco In _enderecoRepository.GetAll() On e.Id Equals p.IdEndereco
+                                                          Select New PessoaDTO With {
+                                                            .Id = p.Id,
+                                                            .CPF = p.CPF,
+                                                            .Endereco = e.EnderecoCompleto,
+                                                            .IdEndereco = e.Id,
+                                                            .Nascimento = p.Nascimento,
+                                                            .Nome = p.Nome,
+                                                            .RG = p.RG
+                                                            }).ToList())
       Catch ex As Exception
         OnErrorOcurred(ex)
       End Try

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace EntityFrameworkLib.Models.DTOs
 {
@@ -9,6 +10,7 @@ namespace EntityFrameworkLib.Models.DTOs
         public string CPF { get; set; }
         public string RG { get; set; }
         public DateTime Nascimento { get; set; }
+        [Browsable(false)]
         public int IdEndereco { get; set; }
         public string Endereco { get; set; }
     }
