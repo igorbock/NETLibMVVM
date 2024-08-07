@@ -84,11 +84,9 @@ Namespace ViewModels
         OnPropertyChanged(NameOf(Pessoas))
       End Set
     End Property
-    Private Sub AddEndereco()
-      _navigationManager.ShowPage("frmEndereco")
-      Load()
-    End Sub
-    Private Sub Load()
+    Protected Overrides Sub LoadTypeT()
+      MyBase.LoadTypeT()
+
       Try
         Enderecos = _enderecoRepository.GetAll
         Pessoas = New ObservableCollection(Of PessoaDTO)((From p As Pessoa In _typeTRepository.GetAll()
@@ -106,15 +104,5 @@ Namespace ViewModels
         OnErrorOcurred(ex)
       End Try
     End Sub
-    Public ReadOnly Property AddEnderecoCommand As ICommand
-      Get
-        Return New RelayCommand(Sub() AddEndereco())
-      End Get
-    End Property
-    Public ReadOnly Property LoadCommand As ICommand
-      Get
-        Return New RelayCommand(Sub() Load())
-      End Get
-    End Property
   End Class
 End Namespace

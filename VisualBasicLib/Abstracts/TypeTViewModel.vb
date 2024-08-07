@@ -17,9 +17,6 @@ Namespace Abstracts
     Public Sub New(typeTRepository As RepositoryAbstract(Of TypeT), navManager As INavigationManager)
       _typeTRepository = typeTRepository
       _navigationManager = navManager
-      ListTypeT = _typeTRepository.GetAll()
-      CurrentItem = Activator.CreateInstance(Of TypeT)
-      ReadMode()
     End Sub
     Private Property _listTypeT As ObservableCollection(Of TypeT)
     Public Property ListTypeT As ObservableCollection(Of TypeT)
@@ -130,6 +127,11 @@ Namespace Abstracts
       RaiseEvent QuestionOcurred(Me, e)
     End Sub
 
+    Public Overridable ReadOnly Property LoadCommand As ICommand
+      Get
+        Return New RelayCommand(Sub() LoadTypeT())
+      End Get
+    End Property
     Public Overridable ReadOnly Property SaveCommand As ICommand
       Get
         Return New RelayCommand(Sub() SaveTypeT())
@@ -160,6 +162,16 @@ Namespace Abstracts
         Return New RelayCommand(Sub() _navigationManager.ClosePage())
       End Get
     End Property
+    Protected Overridable Sub LoadTypeT()
+      Try
+        CurrentItem = Activator.CreateInstance(Of TypeT)()
+        ListTypeT = _typeTRepository.GetAll()
+
+        ReadMode()
+      Catch ex As Exception
+        OnErrorOcurred(ex)
+      End Try
+    End Sub
     Protected Overridable Sub SaveTypeT()
       Try
         If _currentItem.Id = 0 Then
