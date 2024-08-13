@@ -1,11 +1,8 @@
 ﻿Imports System.Collections.ObjectModel
-Imports System.Windows.Input
 Imports EntityFrameworkLib.Models
 Imports EntityFrameworkLib.Models.DTOs
 Imports VisualBasicLib.Abstracts
-Imports VisualBasicLib.Classes
 Imports VisualBasicLib.Interfaces
-Imports VisualBasicLib.Repositories
 
 Namespace ViewModels
   Public Class PessoaViewModel
@@ -13,10 +10,11 @@ Namespace ViewModels
 
     Private ReadOnly Property _enderecoRepository As RepositoryAbstract(Of Endereco)
 
-    Public Sub New(navManager As INavigationManager)
-      MyBase.New(New PessoaRepository(), navManager)
+    Public Sub New(repository As RepositoryAbstract(Of Pessoa), navManager As INavigationManager, enderecoRepository As RepositoryAbstract(Of Endereco))
+      MyBase.New(repository, navManager)
 
-      _enderecoRepository = New EnderecoRepository()
+      CurrentItem = New Pessoa()
+      _enderecoRepository = enderecoRepository
     End Sub
 
     Public Property Nome() As String
@@ -89,9 +87,25 @@ Namespace ViewModels
 
       Try
         Enderecos = _enderecoRepository.GetAll
-        Pessoas = New ObservableCollection(Of PessoaDTO)((From p As Pessoa In _typeTRepository.GetAll()
-                                                          Join e As Endereco In _enderecoRepository.GetAll() On e.Id Equals p.IdEndereco
-                                                          Select New PessoaDTO With {
+        Pessoas = LoadPessoas()
+      Catch ex As Exception
+        OnErrorOcurred(ex)
+      End Try
+    End Sub
+    Protected Overrides Sub SaveTypeT()
+      MyBase.SaveTypeT()
+
+      Pessoas = LoadPessoas()
+    End Sub
+    Protected Overrides Sub DeleteTypeT()
+      MyBase.DeleteTypeT()
+
+      Pessoas = LoadPessoas()
+    End Sub
+    Private Function LoadPessoas() As ObservableCollection(Of PessoaDTO)
+      Return New ObservableCollection(Of PessoaDTO)((From p As Pessoa In _typeTRepository.GetAll()
+                                                     Join e As Endereco In _enderecoRepository.GetAll() On e.Id Equals p.IdEndereco
+                                                     Select New PessoaDTO With {
                                                             .Id = p.Id,
                                                             .CPF = p.CPF,
                                                             .Endereco = e.EnderecoCompleto,
@@ -100,9 +114,6 @@ Namespace ViewModels
                                                             .Nome = p.Nome,
                                                             .RG = p.RG
                                                             }).ToList())
-      Catch ex As Exception
-        OnErrorOcurred(ex)
-      End Try
-    End Sub
+    End Function
   End Class
 End Namespace
