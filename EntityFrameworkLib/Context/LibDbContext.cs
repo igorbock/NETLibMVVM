@@ -20,6 +20,8 @@ namespace EntityFrameworkLib.Context
         public DbSet<Pessoa> Pessoas { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<Formulario> Formularios { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Login> Logins { get; set; }
     }
 }
 
