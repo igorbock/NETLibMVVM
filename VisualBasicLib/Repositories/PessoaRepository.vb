@@ -1,10 +1,15 @@
 ﻿Imports System.Collections.ObjectModel
+Imports EntityFrameworkLib.Context
 Imports EntityFrameworkLib.Models
 Imports VisualBasicLib.Abstracts
 
 Namespace Repositories
   Public Class PessoaRepository
     Inherits RepositoryAbstract(Of Pessoa)
+
+    Public Sub New(dbContext As LibDbContext)
+      MyBase.New(dbContext)
+    End Sub
 
     Public Overrides Sub Insert(entity As Pessoa)
       _dbContext.Pessoas.Add(entity)

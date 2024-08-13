@@ -7,8 +7,8 @@ Namespace Abstracts
     Protected ReadOnly Property _dbContext As LibDbContext
     Private Property _transaction As IDbContextTransaction
 
-    Public Sub New()
-      _dbContext = New LibDbContext(New Microsoft.EntityFrameworkCore.DbContextOptions(Of LibDbContext))
+    Public Sub New(dbContext As LibDbContext)
+      _dbContext = dbContext
     End Sub
 
     Protected Overrides Sub Finalize()

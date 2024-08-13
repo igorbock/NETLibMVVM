@@ -1,10 +1,15 @@
 ﻿Imports System.Collections.ObjectModel
+Imports EntityFrameworkLib.Context
 Imports EntityFrameworkLib.Models
 Imports VisualBasicLib.Abstracts
 
 Namespace Repositories
   Public Class EnderecoRepository
     Inherits RepositoryAbstract(Of Endereco)
+
+    Public Sub New(dbContext As LibDbContext)
+      MyBase.New(dbContext)
+    End Sub
 
     Public Overrides Sub Insert(entity As Endereco)
       _dbContext.Enderecos.Add(entity)
