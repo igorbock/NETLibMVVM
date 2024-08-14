@@ -2,7 +2,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
 
 namespace EntityFrameworkLib.Models
 {
