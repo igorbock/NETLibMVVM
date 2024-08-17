@@ -36,5 +36,6 @@ Namespace Abstracts
       User = New Usuario
     End Sub
     Public MustOverride Sub SignIn()
+    Public MustOverride Sub IsAuthenticated()
   End Class
 End Namespace

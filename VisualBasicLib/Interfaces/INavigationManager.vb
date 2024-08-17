@@ -1,6 +1,6 @@
 ﻿Namespace Interfaces
   Public Interface INavigationManager
-    Sub StartHomePage()
+    Sub ShowDialog(pageName As String)
     Sub ShowPage(pageName As String)
     Sub ClosePage()
   End Interface
