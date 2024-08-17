@@ -33,9 +33,10 @@ Namespace Abstracts
     Public Sub New(navigation As INavigationManager)
       _navigation = navigation
 
-      User = New Usuario
+      User = New Usuario With {.Nome = String.Empty}
     End Sub
     Public MustOverride Sub SignIn()
+    Public MustOverride Sub SignOut()
     Public MustOverride Sub IsAuthenticated()
   End Class
 End Namespace
