@@ -1,8 +1,10 @@
-﻿Imports EntityFrameworkLib.Models
+﻿Imports System.ComponentModel
+Imports EntityFrameworkLib.Models
 Imports VisualBasicLib.Interfaces
 
 Namespace Abstracts
   Public MustInherit Class LoginAbstract
+    Implements INotifyPropertyChanged
     Private _token As String
     Public Property Token() As String
       Get
@@ -10,6 +12,7 @@ Namespace Abstracts
       End Get
       Set(value As String)
         _token = value
+        OnPropertyChanged(NameOf(Token))
       End Set
     End Property
     Private _user As Usuario
@@ -19,6 +22,7 @@ Namespace Abstracts
       End Get
       Set(value As Usuario)
         _user = value
+        OnPropertyChanged(NameOf(User))
       End Set
     End Property
     Private _navigation As INavigationManager
@@ -38,5 +42,9 @@ Namespace Abstracts
     Public MustOverride Sub SignIn()
     Public MustOverride Sub SignOut()
     Public MustOverride Sub IsAuthenticated()
+    Private Sub OnPropertyChanged(propertyName As String)
+      RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+    End Sub
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
   End Class
 End Namespace
