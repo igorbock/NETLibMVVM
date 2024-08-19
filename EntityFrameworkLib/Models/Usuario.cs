@@ -8,13 +8,13 @@ namespace EntityFrameworkLib.Models
         [Key]
         public int Id { get; set; }
 
-        [Required, MaxLength(30)]
+        [Required, MaxLength(255)]
         public string Nome { get; set; }
 
-        [Required, MaxLength(30)]
-        public string Email { get; set; }
+        [Required, MaxLength(255)]
+        public string HashSenha { get; set; }
 
-        [Required, MaxLength(100)]
-        public string Senha { get; set; }
+        [Required]
+        public byte[] Salt { get; set; }
     }
 }
