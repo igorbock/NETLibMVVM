@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports System.IdentityModel.Tokens.Jwt
 Imports EntityFrameworkLib.Models
 Imports VisualBasicLib.Interfaces
 
@@ -25,6 +26,26 @@ Namespace Abstracts
         OnPropertyChanged(NameOf(User))
       End Set
     End Property
+    Private _userName As String
+    Public Property UserName() As String
+      Get
+        Return _userName
+      End Get
+      Set(value As String)
+        _userName = value
+        OnPropertyChanged(NameOf(UserName))
+      End Set
+    End Property
+    Private _jwtoken As JwtSecurityToken
+    Public Property Jwtoken() As JwtSecurityToken
+      Get
+        Return _jwtoken
+      End Get
+      Set(value As JwtSecurityToken)
+        _jwtoken = value
+        OnPropertyChanged(NameOf(Jwtoken))
+      End Set
+    End Property
     Private _navigation As INavigationManager
     Public Property Navigation() As INavigationManager
       Get
@@ -38,6 +59,7 @@ Namespace Abstracts
       _navigation = navigation
 
       User = New Usuario With {.Nome = String.Empty}
+      Jwtoken = New JwtSecurityToken
     End Sub
     Public MustOverride Sub SignIn()
     Public MustOverride Sub SignOut()
