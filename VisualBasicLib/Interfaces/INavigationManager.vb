@@ -4,5 +4,6 @@
     Sub ShowPage(pageName As String)
     Sub ClosePage()
     Sub ClosePage(pageName As String)
+    Sub CloseAllPages()
   End Interface
 End Namespace
