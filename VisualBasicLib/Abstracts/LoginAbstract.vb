@@ -11,7 +11,7 @@ Namespace Abstracts
   Public MustInherit Class LoginAbstract
     Implements INotifyPropertyChanged
 
-    Private WithEvents timer As Timer
+    Private WithEvents Timer As Timer
 
     Private _token As String
     Public Property Token() As String
@@ -89,17 +89,15 @@ Namespace Abstracts
       Jwtoken = New JwtSecurityToken
       RegistroDTO = New SignUpDTO
 
-      timer = New Timer(10000) With {
-        .Enabled = True
-      }
+      Timer = New Timer(10000)
 
-      AddHandler timer.Elapsed, AddressOf IsAuthenticated
+      AddHandler Timer.Elapsed, AddressOf IsAuthenticated
     End Sub
     Protected Sub StartTimer()
-      timer.Start()
+      Timer.Start()
     End Sub
     Protected Sub StopTimer()
-      timer.Stop()
+      Timer.Stop()
     End Sub
     Public MustOverride Sub SignIn()
     Public MustOverride Sub SignUp()
