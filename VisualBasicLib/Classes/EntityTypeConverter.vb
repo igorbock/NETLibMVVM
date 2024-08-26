@@ -1,6 +1,4 @@
 ﻿Imports System.ComponentModel
-Imports System.Globalization
-Imports System.Reflection
 Imports EntityFrameworkLib.Interfaces
 
 Namespace Classes
@@ -9,17 +7,16 @@ Namespace Classes
     Inherits TypeConverter
 
     Public Overrides Function GetStandardValues(context As ITypeDescriptorContext) As StandardValuesCollection
-      Dim modelAssembly As Assembly
       Dim modelTypes As New List(Of Type)
       Try
-        modelAssembly = Assembly.GetAssembly(GetType(IEntity))
-        modelTypes = modelAssembly.GetTypes() _
-            .Where(Function(t) t.IsClass AndAlso Not t.IsAbstract AndAlso t.IsSubclassOf(GetType(IEntity))).ToList()
+        Dim interfaceType As Type = GetType(IEntity)
+        modelTypes = AppDomain.CurrentDomain.GetAssemblies() _
+          .SelectMany(Function(a) a.GetTypes()) _
+          .Where(Function(a) interfaceType.IsAssignableFrom(a) AndAlso a.IsClass).ToList()
       Catch ex As Reflection.ReflectionTypeLoadException
         Dim loaderExceptions = ex.LoaderExceptions
         For Each innerEx As Exception In loaderExceptions
-          System.IO.File.WriteAllText("D:\Erro.txt", $"{innerEx.Message}{Environment.NewLine}{ex.StackTrace}{Environment.NewLine}O Assembly foi:{modelAssembly.FullName}")
-          'Console.WriteLine(innerEx.Message) ' Ou logue em algum lugar
+          IO.File.WriteAllText("D:\Erro.txt", $"{innerEx.Message}{Environment.NewLine}{ex.StackTrace}{Environment.NewLine}")
         Next
       End Try
 
