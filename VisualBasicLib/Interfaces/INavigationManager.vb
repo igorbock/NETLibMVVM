@@ -5,5 +5,6 @@
     Sub ClosePage()
     Sub ClosePage(pageName As String)
     Sub CloseAllPages()
+    Function GetOpenedOrCreatePage(pageName As String) As Object
   End Interface
 End Namespace

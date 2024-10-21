@@ -1,4 +1,5 @@
 ﻿using EntityFrameworkLib.Models;
+using EntityFrameworkLib.Models.Academia;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkLib.Context
@@ -22,6 +23,11 @@ namespace EntityFrameworkLib.Context
         public DbSet<Formulario> Formularios { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Login> Logins { get; set; }
+        public DbSet<Aluno> Alunos { get; set; }
+        public DbSet<FichaTreino> FichasTreino { get; set; }
+        public DbSet<TreinoAluno> TreinosAluno { get; set; }
+        public DbSet<Treino> Treinos { get; set; }
+        public DbSet<Exercicio> Exercicios { get; set; }
     }
 }
 

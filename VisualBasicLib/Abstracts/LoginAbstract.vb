@@ -104,12 +104,12 @@ Namespace Abstracts
     Public MustOverride Sub SignOut()
     Public MustOverride Sub IsAuthenticated()
     Public MustOverride Sub HasUserInDatabase()
-    Protected Overridable Function HashPassword(password As String, salt As Byte()) As String
+    Public Overridable Function HashPassword(password As String, salt As Byte()) As String
       Dim pbkdf2 As New Rfc2898DeriveBytes(password, salt, 10000)
       Dim hash As Byte() = pbkdf2.GetBytes(32)
       Return Convert.ToBase64String(hash)
     End Function
-    Protected Function VerifyPassword(password As String, storedHash As String, salt As Byte()) As Boolean
+    Public Overridable Function VerifyPassword(password As String, storedHash As String, salt As Byte()) As Boolean
       Dim inputHash As String = HashPassword(password, salt)
       Return storedHash.Equals(inputHash)
     End Function

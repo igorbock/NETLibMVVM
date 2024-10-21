@@ -98,6 +98,16 @@ Namespace Abstracts
         OnPropertyChanged(NameOf(ButtonCancelVisible))
       End Set
     End Property
+    Private _buttonRefreshVisible As Boolean
+    Public Property ButtonRefreshVisible() As Boolean
+      Get
+        Return _buttonRefreshVisible
+      End Get
+      Set(value As Boolean)
+        _buttonRefreshVisible = value
+        OnPropertyChanged(NameOf(ButtonRefreshVisible))
+      End Set
+    End Property
     Private _enableControl As Boolean
     Public Property EnableControl() As Boolean
       Get
@@ -254,6 +264,7 @@ Namespace Abstracts
       ButtonCloseVisible = False
       ButtonSaveVisible = True
       ButtonCancelVisible = True
+      ButtonRefreshVisible = False
       EnableControl = True
       EnableListView = False
     End Sub
@@ -264,6 +275,7 @@ Namespace Abstracts
       ButtonCloseVisible = True
       ButtonSaveVisible = False
       ButtonCancelVisible = False
+      ButtonRefreshVisible = True
       EnableControl = False
       EnableListView = True
     End Sub
